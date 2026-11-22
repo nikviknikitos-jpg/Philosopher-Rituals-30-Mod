@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Specification-Title: philosophersstone
+Implementation-Title: philosophersstone
+Implementation-Version: 1.0.0
+Implementation-Timestamp: 2026-11-22T09:24:53+0000
+

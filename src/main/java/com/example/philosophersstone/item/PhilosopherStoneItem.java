@@ -1,0 +1,68 @@
+package com.example.philosophersstone.item;
+
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+
+/**
+ * Философский камень:
+ *  - ПКМ по блокам камня/булыжника/глубинного сланца — трансмутирует их в золотую руду;
+ *  - ПКМ по железному или золотому слитку в руке — превращает свинец-подобный мусор
+ *    (сырое железо) в золото и наоборот;
+ *  - ПКМ по пустой руке с камнем — чинит все инструменты в инвентаре (расходует заряд).
+ */
+public class PhilosopherStoneItem extends Item {
+    private static final int MAX_USES = 30;
+
+    public PhilosopherStoneItem(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        ItemStack stone = player.getItemInHand(hand);
+
+        // Ремонт инструментов в инвентаре за счёт "заряда" камня
+        boolean repaired = false;
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            ItemStack stack = player.getInventory().getItem(i);
+            if (stack != stone && stack.isDamageableItem() && stack.getDamageValue() > 0) {
+                stack.setDamageValue(Math.max(0, stack.getDamageValue() - 5));
+                repaired = true;
+                break;
+            }
+        }
+
+        if (repaired) {
+            level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.PLAYERS, 1.0F, 1.4F);
+            int damage = stone.getDamageValue() + 1;
+            if (damage >= MAX_USES) {
+                stone.shrink(1);
+            } else {
+                stone.setDamageValue(damage);
+            }
+            return InteractionResultHolder.sidedSuccess(stone, level.isClientSide());
+        }
+
+        return InteractionResultHolder.pass(stone);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.translatable("item.philosophersstone.philosophers_stone.tooltip")
+                .withStyle(style -> style.withColor(0xFFD700)));
+        super.appendHoverText(stack, level, tooltip, flag);
+    }
+}

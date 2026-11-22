@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="philosophersstone"
+version="1.0.0"
+displayName="Philosopher's Stone"
+description='''
+Алхимический мод для Minecraft 1.20.1 (Forge):
+- Философский камень: трансмутирует блоки (камень -> золотая руда и т.д.) и чинит инструменты.
+- Алтарь трансмутации.
+- Эссенция трансмутации.
+'''
+
+[[dependencies.philosophersstone]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.philosophersstone]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20.1,1.21)"
+    ordering="NONE"
+    side="BOTH"

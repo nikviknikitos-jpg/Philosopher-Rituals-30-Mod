@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "ODO",
+    "NNN"
+  ],
+  "key": {
+    "O": "minecraft:obsidian",
+    "D": "minecraft:diamond",
+    "N": "minecraft:netherite_scrap"
+  },
+  "result": {
+    "item": "philosophersstone:transmutation_altar"
+  }
+}

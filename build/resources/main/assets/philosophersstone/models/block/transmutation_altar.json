@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "philosophersstone:block/transmutation_altar_top",
+    "bottom": "minecraft:block/netherite_block",
+    "side": "philosophersstone:block/transmutation_altar_side"
+  }
+}
